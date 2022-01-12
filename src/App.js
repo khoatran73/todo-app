@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container, Grid } from '@mui/material';
+import React from 'react';
+import Main from './components/Main';
+import Sidebar from './components/Sidebar';
+import "@fontsource/roboto";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Container style={{ paddingTop: 20, paddingBottom: 20 }}>
+      <Grid container spacing={2}>
+        <Grid
+          item
+          sm={3}
+          xs={12}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          <Sidebar />
+        </Grid>
+        <Grid
+          item
+          sm={9}
+          xs={12}
+        >
+          <Main />
+        </Grid>
+      </Grid>
+    </Container>
+  )
 }
 
 export default App;
