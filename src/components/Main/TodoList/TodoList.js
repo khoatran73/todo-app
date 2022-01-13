@@ -1,18 +1,28 @@
 import React from 'react';
-import { Grid} from '@mui/material';
+import { Grid } from '@mui/material';
 import Todo from './Todo';
-
+import { useSelector } from 'react-redux'
+import { todoListSelector } from '../../../redux/selectors';
 
 function TodoList() {
+    const todoList = useSelector(todoListSelector)
+
     return (
         <Grid
             container
             direction="column"
             sx={{ m: 1 }}
+            style={{ paddingTop: 20, paddingBottom: 20 }}
         >
-            <Todo name="cv 1" priority="High" />
-            <Todo name="cv 2" priority="Medium" />
-            <Todo name="cv 3" priority="Low" />
+            {todoList.map(todo => (
+                <Todo
+                    key={todo.id}
+                    id={todo.id}
+                    name={todo.name}
+                    priority={todo.priority}
+                    completed={todo.completed}
+                />
+            ))}
         </Grid>
     )
 }

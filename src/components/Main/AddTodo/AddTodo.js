@@ -1,11 +1,17 @@
 import React from 'react';
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { FormControl, TextField, Button, Select, MenuItem, InputLabel, Grid } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save'
+import { useDispatch } from 'react-redux'
+import { addTodo } from '../../../redux/actions'
+import { v4 as uuidv4 } from 'uuid'
 
 function AddTodo() {
     const [todo, setTodo] = useState("")
     const [priority, setPriority] = useState("High")
+    const addTodoRef = useRef()
+
+    const dispatch = useDispatch()
 
     const handleSelectChange = e => {
         setPriority(e.target.value)
@@ -16,7 +22,17 @@ function AddTodo() {
     }
 
     const handleSaveTodo = () => {
-        console.log(todo, priority)
+        if (!todo)
+            return
+        dispatch(addTodo({
+            id: uuidv4(),
+            name: todo,
+            priority: priority,
+            completed: false
+        }))
+        setTodo("")
+        setPriority("High")
+        // addTodoRef.current.focus()
     }
 
     return (
@@ -33,6 +49,7 @@ function AddTodo() {
             >
                 <FormControl fullWidth>
                     <TextField
+                        ref={addTodoRef}
                         id="todo-filter"
                         label="Thêm công việc"
                         variant="outlined"

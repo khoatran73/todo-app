@@ -1,6 +1,8 @@
 import React from 'react'
 import { FormGroup, FormControlLabel, Checkbox, Grid, Card } from '@mui/material';
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { statusTodoChange } from '../../../redux/actions';
 
 const priorityCheck = {
     High: {
@@ -23,11 +25,14 @@ const priorityCheck = {
     }
 }
 
-function Todo({ name, priority }) {
-    const [checked, setChecked] = useState(false)
+function Todo({ name, priority, completed, id }) {
+    const [checked, setChecked] = useState(completed)
+
+    const dispatch = useDispatch()
 
     const handleCheckboxChange = () => {
         setChecked(!checked)
+        dispatch(statusTodoChange(id))
     }
 
     return (
@@ -42,7 +47,7 @@ function Todo({ name, priority }) {
             justifyContent="space-between">
             <Grid item xs sm={10}>
                 <FormGroup>
-                    <FormControlLabel control={<Checkbox onChange={handleCheckboxChange} />} label={name} />
+                    <FormControlLabel control={<Checkbox checked={checked} onChange={handleCheckboxChange} />} label={name} />
                 </FormGroup>
             </Grid>
             <Grid
