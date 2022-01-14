@@ -11,17 +11,18 @@ export const todoListRemainingSelector = createSelector(
     statusFilterSelector,
     priorityFilterSelector,
     (todoList, searchText, statusFilter, priorityFilter) => {
-        return todoList.filter((todo) => {
-            if (statusFilter === "All")
-                return !priorityFilter.length ?
-                    todo.name.includes(searchText)
-                    : todo.name.includes(searchText) && priorityFilter.includes(todo.priority)
+        if (todoList)
+            return todoList.filter((todo) => {
+                if (statusFilter === "All")
+                    return !priorityFilter.length ?
+                        todo.name.includes(searchText)
+                        : todo.name.includes(searchText) && priorityFilter.includes(todo.priority)
 
-            return !priorityFilter.length ?
-                (todo.name.includes(searchText) && (statusFilter === "Completed" ? todo.completed : !todo.completed))
-                : (todo.name.includes(searchText) && (statusFilter === "Completed" ? todo.completed : !todo.completed))
-                && priorityFilter.includes(todo.priority)
-        })
+                return !priorityFilter.length ?
+                    (todo.name.includes(searchText) && (statusFilter === "Completed" ? todo.completed : !todo.completed))
+                    : (todo.name.includes(searchText) && (statusFilter === "Completed" ? todo.completed : !todo.completed))
+                    && priorityFilter.includes(todo.priority)
+            })
     }
 )
 

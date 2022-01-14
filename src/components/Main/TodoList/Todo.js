@@ -27,10 +27,11 @@ const priorityCheck = {
 }
 
 function Todo({ name, priority, completed, id }) {
+    const todoRef = useRef()
+
     const [checked, setChecked] = useState(completed)
     const [editable, setEditable] = useState(false)
-
-    const todoRef = useRef()
+    const [todo, setTodo] = useState(todoRef.current?.innerHTML.toString().trim() || "")
 
     const dispatch = useDispatch()
 
@@ -54,10 +55,14 @@ function Todo({ name, priority, completed, id }) {
             element.classList.add("editable")
             element.focus()
         }
-    }, [editable])
+
+        if (!editable) {
+            dispatch(todoSlice.actions.todoChange({ id: id, todo: todo }))
+        }
+    }, [editable, dispatch, id, todo])
 
     const handleTodoChange = () => {
-        console.log(todoRef.current.innerHTML)
+        setTodo(todoRef.current.innerHTML.toString().trim())
     }
 
     return (

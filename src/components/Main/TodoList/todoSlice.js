@@ -32,5 +32,17 @@ export const todoSlice = createSlice({
                 currentTodo.completed = !currentTodo.completed
             }
         },
+        todoChange: (state, action) => {
+            const id = action.payload.id
+            const todo = action.payload.todo
+
+            if (!todo) return
+
+            const currentTodo = state.find(todo => todo.id === id)
+
+            if (currentTodo) {
+                currentTodo.name = todo
+            }
+        }
     }
 })

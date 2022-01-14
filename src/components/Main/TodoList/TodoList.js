@@ -5,14 +5,16 @@ import { useSelector } from 'react-redux'
 import { todoListRemainingSelector } from '../../../redux/selectors';
 
 function TodoList() {
-    const todoList = useSelector(todoListRemainingSelector)
+    const todoList = useSelector(todoListRemainingSelector) || []
 
     return (
         <Grid
             container
             direction="column"
+            wrap="nowrap"
             sx={{ m: 1 }}
-            style={{ paddingTop: 20, paddingBottom: 20 }}
+            style={{ marginTop: 30, marginBottom: 30 }}
+            className="todo-list"
         >
             {todoList.map(todo => (
                 <Todo
