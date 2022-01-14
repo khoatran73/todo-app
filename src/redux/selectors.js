@@ -1,25 +1,48 @@
-export const todoListSelector = state => {
-    const searchText = searchTextSelector(state)
-    const statusFilter = statusFilterSelector(state)
-    const priorityFilter = priorityFilterSelector(state)
-
-    const todosRemaining = state.todoList.filter(todo => {
-        if (statusFilter === "All")
-            return !priorityFilter.length ?
-                todo.name.includes(searchText)
-                : todo.name.includes(searchText) && priorityFilter.includes(todo.priority)
-
-        return !priorityFilter.length ?
-            (todo.name.includes(searchText) && (statusFilter === "Completed" ? todo.completed : !todo.completed))
-            : (todo.name.includes(searchText) && (statusFilter === "Completed" ? todo.completed : !todo.completed))
-            && priorityFilter.includes(todo.priority)
-    })
-
-    return todosRemaining
-}
+import { createSelector } from "@reduxjs/toolkit"
 
 export const searchTextSelector = (state) => state.filters.search
-
 export const statusFilterSelector = (state) => state.filters.status
-
 export const priorityFilterSelector = (state) => state.filters.priority
+export const todoListSelector = state => state.todoList
+
+export const todoListRemainingSelector = createSelector(
+    todoListSelector,
+    searchTextSelector,
+    statusFilterSelector,
+    priorityFilterSelector,
+    (todoList, searchText, statusFilter, priorityFilter) => {
+        return todoList.filter((todo) => {
+            if (statusFilter === "All")
+                return !priorityFilter.length ?
+                    todo.name.includes(searchText)
+                    : todo.name.includes(searchText) && priorityFilter.includes(todo.priority)
+
+            return !priorityFilter.length ?
+                (todo.name.includes(searchText) && (statusFilter === "Completed" ? todo.completed : !todo.completed))
+                : (todo.name.includes(searchText) && (statusFilter === "Completed" ? todo.completed : !todo.completed))
+                && priorityFilter.includes(todo.priority)
+        })
+    }
+)
+
+
+// state => {
+//     const searchText = searchTextSelector(state)
+//     const statusFilter = statusFilterSelector(state)
+//     const priorityFilter = priorityFilterSelector(state)
+
+//     const todosRemaining = state.todoList.filter(todo => {
+//         if (statusFilter === "All")
+//             return !priorityFilter.length ?
+//                 todo.name.includes(searchText)
+//                 : todo.name.includes(searchText) && priorityFilter.includes(todo.priority)
+
+//         return !priorityFilter.length ?
+//             (todo.name.includes(searchText) && (statusFilter === "Completed" ? todo.completed : !todo.completed))
+//             : (todo.name.includes(searchText) && (statusFilter === "Completed" ? todo.completed : !todo.completed))
+//             && priorityFilter.includes(todo.priority)
+//     })
+
+//     return todosRemaining
+// }
+

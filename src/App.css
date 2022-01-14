@@ -1,0 +1,18 @@
+.todo {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    padding: 4px !important;
+}
+
+.editable {
+    background-color: #f9fafa;
+    color: #000;
+    border: none;
+    outline: 1px solid #ccc;
+    box-shadow: 14px 0 0px 4px #f4f5f5, -14px 0 0 4px #f4f5f5;
+    z-index: 1;
+    border-radius: 0.1px;
+    cursor: text;
+    /* padding: 4px 0; */
+}
+

@@ -2,10 +2,10 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import Todo from './Todo';
 import { useSelector } from 'react-redux'
-import { todoListSelector } from '../../../redux/selectors';
+import { todoListRemainingSelector } from '../../../redux/selectors';
 
 function TodoList() {
-    const todoList = useSelector(todoListSelector)
+    const todoList = useSelector(todoListRemainingSelector)
 
     return (
         <Grid

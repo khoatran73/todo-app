@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import React from 'react';
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { searchFilterChange, statusFilterChange, priorityFilterChange } from '../../../redux/actions';
+import { filterSlice } from "./filterSlice"
 
 function Filter() {
     const [priorityFilter, setPriorityFilter] = useState([]);
@@ -20,7 +20,7 @@ function Filter() {
     }
 
     useEffect(() => {
-        dispatch(searchFilterChange(searchText))
+        dispatch(filterSlice.actions.searchFilterChange(searchText))
     }, [searchText, dispatch])
 
     const handlePriorityFilterChange = e => {
@@ -31,7 +31,7 @@ function Filter() {
     }
 
     useEffect(() => {
-        dispatch(priorityFilterChange(priorityFilter))
+        dispatch(filterSlice.actions.priorityFilterChange(priorityFilter))
     }, [priorityFilter, dispatch])
 
     const handleStatusFilterChange = e => {
@@ -39,7 +39,7 @@ function Filter() {
     }
 
     useEffect(() => {
-        dispatch(statusFilterChange(statusFilter))
+        dispatch(filterSlice.actions.statusFilterChange(statusFilter))
     }, [statusFilter, dispatch])
 
     return (
@@ -86,7 +86,7 @@ function Filter() {
             >
                 <FormControl component="fieldset">
                     <FormLabel component="legend">Lọc theo trạng thái</FormLabel>
-                    <RadioGroup row name="status" onChange={handleStatusFilterChange}>
+                    <RadioGroup row name="status" value={statusFilter} onChange={handleStatusFilterChange}>
                         <FormControlLabel value="All" control={<Radio />} label="Tất cả" />
                         <FormControlLabel value="Completed" control={<Radio />} label="Hoàn thành" />
                         <FormControlLabel value="To do" control={<Radio />} label="Đang làm" />

@@ -3,8 +3,8 @@ import { useState, useRef } from 'react'
 import { FormControl, TextField, Button, Select, MenuItem, InputLabel, Grid } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save'
 import { useDispatch } from 'react-redux'
-import { addTodo } from '../../../redux/actions'
 import { v4 as uuidv4 } from 'uuid'
+import { todoSlice } from "../TodoList/todoSlice"
 
 function AddTodo() {
     const [todo, setTodo] = useState("")
@@ -24,7 +24,7 @@ function AddTodo() {
     const handleSaveTodo = () => {
         if (!todo)
             return
-        dispatch(addTodo({
+        dispatch(todoSlice.actions.addTodo({
             id: uuidv4(),
             name: todo,
             priority: priority,

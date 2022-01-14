@@ -3,6 +3,7 @@ import React from 'react';
 import Main from './components/Main';
 import Sidebar from './components/Sidebar';
 import "@fontsource/roboto";
+import "./App.css"
 
 function App() {
   return (

@@ -1,8 +1,9 @@
 import React from 'react'
-import { FormGroup, FormControlLabel, Checkbox, Grid, Card } from '@mui/material';
-import { useState } from 'react'
+import { FormGroup, FormControlLabel, Checkbox, Grid, Card, IconButton, Typography } from '@mui/material';
+import { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { statusTodoChange } from '../../../redux/actions';
+import { todoSlice } from "./todoSlice"
+import EditIcon from '@mui/icons-material/Edit'
 
 const priorityCheck = {
     High: {
@@ -27,12 +28,36 @@ const priorityCheck = {
 
 function Todo({ name, priority, completed, id }) {
     const [checked, setChecked] = useState(completed)
+    const [editable, setEditable] = useState(false)
+
+    const todoRef = useRef()
 
     const dispatch = useDispatch()
 
     const handleCheckboxChange = () => {
         setChecked(!checked)
-        dispatch(statusTodoChange(id))
+        dispatch(todoSlice.actions.statusTodoChange(id))
+    }
+
+    const handleEditButtonClick = () => {
+        setEditable(!editable)
+    }
+
+    useEffect(() => {
+        const element = todoRef.current
+        element.contentEditable = editable
+        if (element.classList.contains("editable") && !editable) {
+            element.classList.remove("editable")
+        }
+
+        if (!element.classList.contains("editable") && editable) {
+            element.classList.add("editable")
+            element.focus()
+        }
+    }, [editable])
+
+    const handleTodoChange = () => {
+        console.log(todoRef.current.innerHTML)
     }
 
     return (
@@ -45,10 +70,29 @@ function Todo({ name, priority, completed, id }) {
             item
             xs
             justifyContent="space-between">
-            <Grid item xs sm={10}>
+            <Grid item xs sm={9}>
                 <FormGroup>
-                    <FormControlLabel control={<Checkbox checked={checked} onChange={handleCheckboxChange} />} label={name} />
+                    <FormControlLabel
+                        control={<Checkbox checked={checked} onChange={handleCheckboxChange} />}
+                        label={<Typography ref={todoRef} onKeyUp={handleTodoChange} className="todo" variant="body2">{name}</Typography>}
+                    />
                 </FormGroup>
+            </Grid>
+            <Grid
+                item
+                xs
+                sm={1}
+                container
+                alignItems="center"
+            >
+                <IconButton
+                    color="primary"
+                    aria-label="upload picture"
+                    component="span"
+                    onClick={handleEditButtonClick}
+                >
+                    <EditIcon />
+                </IconButton>
             </Grid>
             <Grid
                 item
