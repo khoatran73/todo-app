@@ -10,9 +10,8 @@ function Login() {
     const dispatch = useDispatch()
 
     const responseGoogle = (res) => {
-        console.log(res)
-        const name = res.profileObj.name
-        const image = res.profileObj.imageUrl
+        const name = res.profileObj?.name || "Anh Khoa"
+        const image = res.profileObj?.imageUrl || "K"
         dispatch(accountSlice.actions.login({ name, image }))
     }
 
