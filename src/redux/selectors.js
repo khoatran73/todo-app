@@ -26,6 +26,8 @@ export const todoListRemainingSelector = createSelector(
     }
 )
 
+export const accountSelector = state => state.account
+
 
 // state => {
 //     const searchText = searchTextSelector(state)

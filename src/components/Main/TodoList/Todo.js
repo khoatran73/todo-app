@@ -81,7 +81,7 @@ function Todo({ name, priority, completed, id }) {
             xs
             justifyContent="space-between">
             <Grid item xs sm={8}>
-                <FormGroup>
+                <FormGroup style={{ marginLeft: 12 }}>
                     <FormControlLabel
                         control={<Checkbox checked={checked} onChange={handleCheckboxChange} />}
                         label={<Typography ref={todoRef} onKeyUp={handleTodoChange} className="todo" variant="body2">{name}</Typography>}

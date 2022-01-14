@@ -1,29 +1,20 @@
-import { Container, Grid } from '@mui/material';
+import { Container } from '@mui/material';
 import React from 'react';
 import Main from './components/Main';
-import Sidebar from './components/Sidebar';
+import Login from './components/Login/Login';
 import "@fontsource/roboto";
 import "./App.css"
+import { useSelector } from 'react-redux'
+import { accountSelector } from './redux/selectors'
 
 function App() {
+  const account = useSelector(accountSelector)
+
   return (
     <Container style={{ paddingTop: 20, paddingBottom: 20 }}>
-      <Grid container spacing={2}>
-        <Grid
-          item
-          sm={3}
-          xs={12}
-        >
-          <Sidebar />
-        </Grid>
-        <Grid
-          item
-          sm={9}
-          xs={12}
-        >
-          <Main />
-        </Grid>
-      </Grid>
+      {account.name === ""
+        ? <Login />
+        : <Main />}
     </Container>
   )
 }
