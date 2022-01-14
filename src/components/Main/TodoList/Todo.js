@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { todoSlice } from "./todoSlice"
 import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 const priorityCheck = {
     High: {
@@ -65,6 +66,10 @@ function Todo({ name, priority, completed, id }) {
         setTodo(todoRef.current.innerHTML.toString().trim())
     }
 
+    const handleDeleteButtonClick = () => {
+        dispatch(todoSlice.actions.deleteTodo(id))
+    }
+
     return (
         <Grid
             style={{
@@ -75,7 +80,7 @@ function Todo({ name, priority, completed, id }) {
             item
             xs
             justifyContent="space-between">
-            <Grid item xs sm={9}>
+            <Grid item xs sm={8}>
                 <FormGroup>
                     <FormControlLabel
                         control={<Checkbox checked={checked} onChange={handleCheckboxChange} />}
@@ -86,8 +91,10 @@ function Todo({ name, priority, completed, id }) {
             <Grid
                 item
                 xs
-                sm={1}
+                sm={2}
                 container
+                direction="row"
+                justifyContent="center"
                 alignItems="center"
             >
                 <IconButton
@@ -97,6 +104,14 @@ function Todo({ name, priority, completed, id }) {
                     onClick={handleEditButtonClick}
                 >
                     <EditIcon />
+                </IconButton>
+                <IconButton
+                    color="error"
+                    aria-label="upload picture"
+                    component="span"
+                    onClick={handleDeleteButtonClick}
+                >
+                    <DeleteIcon />
                 </IconButton>
             </Grid>
             <Grid

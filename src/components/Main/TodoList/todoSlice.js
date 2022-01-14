@@ -43,6 +43,10 @@ export const todoSlice = createSlice({
             if (currentTodo) {
                 currentTodo.name = todo
             }
+        },
+        deleteTodo: (state, action) => {
+            const id = action.payload
+            state.map((todo, index) => todo.id === id ? state.splice(index, 1) : todo)
         }
     }
 })
