@@ -11,7 +11,7 @@ function Login() {
 
     const responseGoogle = (res) => {
         const name = res.profileObj?.name || "Anh Khoa"
-        const image = res.profileObj?.imageUrl || "K"
+        const image = res.profileObj?.imageUrl || ""
         dispatch(accountSlice.actions.login({ name, image }))
     }
 
