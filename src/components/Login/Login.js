@@ -3,7 +3,7 @@ import { Container, Avatar, Card, Typography } from "@mui/material"
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { GoogleLogin } from 'react-google-login';
 import { useDispatch } from 'react-redux'
-import { accountSlice } from './accountSlice'
+import { accountSlice } from '../../redux/slices/accountSlice'
 import { clientId } from '../../constant/constant'
 
 function Login() {

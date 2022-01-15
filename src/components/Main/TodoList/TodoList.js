@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import Todo from './Todo';
 import { useSelector } from 'react-redux'
-import { todoListRemainingSelector } from '../../../redux/selectors';
+import { todoListRemainingSelector } from '../../../redux/selectors/selectors';
 
 function TodoList() {
     const todoList = useSelector(todoListRemainingSelector) || []

@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { filterSlice } from "../components/Main/Filter/filterSlice"
-import { todoSlice } from "../components/Main/TodoList/todoSlice"
-import { accountSlice } from "../components/Login/accountSlice"
+import { filterSlice } from "./slices/filterSlice"
+import { todoSlice } from "./slices/todoSlice"
+import { accountSlice } from "./slices/accountSlice"
 
 const store = configureStore({
     reducer: {

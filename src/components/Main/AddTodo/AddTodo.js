@@ -4,7 +4,7 @@ import { FormControl, TextField, Button, Select, MenuItem, InputLabel, Grid } fr
 import SaveIcon from '@mui/icons-material/Save'
 import { useDispatch } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
-import { todoSlice } from "../TodoList/todoSlice"
+import { todoSlice } from "../../../redux/slices/todoSlice"
 
 function AddTodo() {
     const [todo, setTodo] = useState("")

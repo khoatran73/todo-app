@@ -3,9 +3,9 @@ import React from 'react';
 import { GoogleLogout } from 'react-google-login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useSelector } from 'react-redux'
-import { accountSelector } from '../../../redux/selectors'
+import { accountSelector } from '../../../redux/selectors/selectors'
 import { useDispatch } from 'react-redux'
-import { accountSlice } from '../../Login/accountSlice'
+import { accountSlice } from '../../../redux/slices/accountSlice'
 import { deepOrange } from '@mui/material/colors';
 import { clientId } from '../../../constant/constant'
 

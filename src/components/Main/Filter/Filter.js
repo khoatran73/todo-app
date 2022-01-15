@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import React from 'react';
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { filterSlice } from "./filterSlice"
+import { filterSlice } from "../../../redux/slices/filterSlice"
 
 function Filter() {
     const [priorityFilter, setPriorityFilter] = useState([]);
