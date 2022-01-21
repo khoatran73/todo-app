@@ -10,13 +10,14 @@ export const todoListRemainingSelector = createSelector(
     searchTextSelector,
     statusFilterSelector,
     priorityFilterSelector,
-    (todoList, searchText, statusFilter, priorityFilter) => {
+    (todoSlice, searchText, statusFilter, priorityFilter) => {
+        const todoList = todoSlice.todoList
         if (todoList)
             return todoList.filter((todo) => {
                 if (statusFilter === "All")
                     return !priorityFilter.length ?
                         todo.name.includes(searchText)
-                        : todo.name.includes(searchText) && priorityFilter.includes(todo.priority)
+                        : todo.name.includes(searchText) && priorityFilter?.includes(todo.priority)
 
                 return !priorityFilter.length ?
                     (todo.name.includes(searchText) && (statusFilter === "Completed" ? todo.completed : !todo.completed))
@@ -26,7 +27,9 @@ export const todoListRemainingSelector = createSelector(
     }
 )
 
-export const accountSelector = state => state.account
+export const accountSelector = state => {
+    return state.account.currentUser
+}
 
 
 // state => {

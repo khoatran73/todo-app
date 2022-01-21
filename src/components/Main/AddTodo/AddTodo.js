@@ -2,14 +2,18 @@ import React from 'react';
 import { useState, useRef } from 'react'
 import { FormControl, TextField, Button, Select, MenuItem, InputLabel, Grid } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 import { todoSlice } from "../../../redux/slices/todoSlice"
+import { accountSelector } from '../../../redux/selectors/selectors'
+import { serverUrl } from '../../../constant/constant'
 
 function AddTodo() {
     const [todo, setTodo] = useState("")
     const [priority, setPriority] = useState("High")
     const addTodoRef = useRef()
+
+    const account = useSelector(accountSelector)
 
     const dispatch = useDispatch()
 
@@ -24,12 +28,39 @@ function AddTodo() {
     const handleSaveTodo = () => {
         if (!todo)
             return
-        dispatch(todoSlice.actions.addTodo({
+
+        const todoObj = {
             id: uuidv4(),
+            account_id: account.id,
             name: todo,
             priority: priority,
             completed: false
+        }
+        dispatch(todoSlice.actions.addTodo({
+            todoObj
         }))
+
+        const request = new Request(serverUrl + "/api/todo", {
+            method: "post",
+            credentials: 'include',
+            body: JSON.stringify(todoObj),
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                'Content-Type': 'application/json'
+            }
+        })
+
+        fetch(request)
+            .then(res => res.json())
+            .then(result => {
+                console.log(result)
+                // const todoList = result.todoList
+                // dispatch(todoSlice.actions.addTodoList({
+                //     todoList: todoList
+                // }))
+            })
+            .catch(error => console.error(error))
+
         setTodo("")
         setPriority("High")
         // addTodoRef.current.focus()

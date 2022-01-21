@@ -24,7 +24,7 @@ function Sidebar() {
                 <Avatar
                     sx={{ bgcolor: deepOrange[500] }}
                     alt={account.name}
-                    src={account.image}
+                    src={account.url}
                     style={{ marginRight: 10 }}
                 />
                 <Typography component="p" variant="body2" style={{ fontSize: 18, fontWeight: 'bold' }}>

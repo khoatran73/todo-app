@@ -1,11 +1,25 @@
 import React from 'react';
+import { useEffect } from 'react'
 import { Grid } from '@mui/material';
 import Todo from './Todo';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { todoListRemainingSelector } from '../../../redux/selectors/selectors';
+import { accountSelector } from '../../../redux/selectors/selectors'
+import { todoSlice, getTodoList } from "../../../redux/slices/todoSlice"
+import { unwrapResult } from '@reduxjs/toolkit';
 
 function TodoList() {
     const todoList = useSelector(todoListRemainingSelector) || []
+
+    const account = useSelector(accountSelector)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        const actionResult = dispatch(getTodoList(account))
+        const todoListtt = unwrapResult(actionResult)
+        console.log(todoListtt)
+    }, [account, dispatch])
 
     return (
         <Grid

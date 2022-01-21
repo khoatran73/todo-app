@@ -12,7 +12,7 @@ function App() {
 
   return (
     <Container style={{ paddingTop: 20, paddingBottom: 20 }}>
-      {account.name === ""
+      {!account
         ? <Login />
         : <Main />}
     </Container>

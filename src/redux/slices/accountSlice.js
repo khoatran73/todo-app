@@ -1,19 +1,37 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import accountAPI from "../../API/accountAPI";
+
+export const login = createAsyncThunk('account/login', async (account) => {
+    await accountAPI.postAccount(account)
+
+    return account
+})
 
 export const accountSlice = createSlice({
     name: "account",
     initialState: {
-        name: "",
-        image: "",
+        isLoading: false,
+        errorMessage: '',
+        currentUser: null,
     },
     reducers: {
-        login: (state, action) => {
-            state.name = action.payload.name
-            state.image = action.payload.image
-        },
         logout: (state, action) => {
-            state.name = ""
-            state.image = ""
+            state.currentUser = null;
+            state.errorMessage = '';
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(login.pending, (state) => {
+            state.isLoading = true;
+        })
+        builder.addCase(login.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.currentUser = action.payload;
+        })
+
+        builder.addCase(login.rejected, (state, action) => {
+            state.isLoading = false;
+            state.errorMessage = action.payload.message;
+        })
     }
 })

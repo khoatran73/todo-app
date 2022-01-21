@@ -3,16 +3,21 @@ import { Container, Avatar, Card, Typography } from "@mui/material"
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { GoogleLogin } from 'react-google-login';
 import { useDispatch } from 'react-redux'
-import { accountSlice } from '../../redux/slices/accountSlice'
+import { login } from '../../redux/slices/accountSlice'
 import { clientId } from '../../constant/constant'
 
 function Login() {
     const dispatch = useDispatch()
 
-    const responseGoogle = (res) => {
-        const name = res.profileObj?.name || "Anh Khoa"
-        const image = res.profileObj?.imageUrl || ""
-        dispatch(accountSlice.actions.login({ name, image }))
+    const responseGoogle = async (res) => {
+        const account = {
+            id: res.profileObj?.googleId,
+            email: res.profileObj?.email,
+            name: res.profileObj?.name,
+            url: res.profileObj?.imageUrl
+        }
+
+        dispatch(login(account))
     }
 
     return (

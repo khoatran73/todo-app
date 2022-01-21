@@ -1,33 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import todoAPI from '../../API/todoAPI'
+
+export const getTodoList = createAsyncThunk('todo/getTodoList', async (account) => {
+    const res = await todoAPI.getTodoList(account)
+
+    return res.todoList
+})
 
 export const todoSlice = createSlice({
     name: "todoList",
-    initialState: [
-        {
-            id: "433fc2aa-af2e-407f-a0fb-31c2403658a1",
-            name: "Học React",
-            priority: "High",
-            completed: true
-        },
-        {
-            id: "589b6fb4-cf21-4590-9997-ab85ea57af68",
-            name: "Báo cáo cuối kỳ CNPM",
-            priority: "Low",
-            completed: false
-        },
-        {
-            id: "066dc1f7-91db-4929-a81c-628ffc61b1b5",
-            name: "Vấn đáp android",
-            priority: "Medium",
-            completed: false
-        }
-    ],
+    initialState: {
+        isLoading: false,
+        errorMessage: '',
+        todoList: [],
+    },
     reducers: {
         addTodo: (state, action) => {
-            state.push(action.payload)
+            state.todoList.push(action.payload)
         },
         statusTodoChange: (state, action) => {
-            const currentTodo = state.find(todo => todo.id === action.payload)
+            const currentTodo = state.todoList.find(todo => todo.id === action.payload)
             if (currentTodo) {
                 currentTodo.completed = !currentTodo.completed
             }
@@ -38,7 +30,7 @@ export const todoSlice = createSlice({
 
             if (!todo) return
 
-            const currentTodo = state.find(todo => todo.id === id)
+            const currentTodo = state.todoList.find(todo => todo.id === id)
 
             if (currentTodo) {
                 currentTodo.name = todo
@@ -46,7 +38,21 @@ export const todoSlice = createSlice({
         },
         deleteTodo: (state, action) => {
             const id = action.payload
-            state.map((todo, index) => todo.id === id ? state.splice(index, 1) : todo)
+            state.todoList.map((todo, index) => todo.id === id ? state.todoList.splice(index, 1) : todo)
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(getTodoList.pending, (state) => {
+            state.isLoading = true;
+        })
+        builder.addCase(getTodoList.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.todoList = action.payload;
+        })
+
+        builder.addCase(getTodoList.rejected, (state, action) => {
+            state.isLoading = false;
+            state.errorMessage = action.payload.message;
+        })
     }
 })
