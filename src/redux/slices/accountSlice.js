@@ -16,8 +16,9 @@ export const accountSlice = createSlice({
     },
     reducers: {
         logout: (state, action) => {
-            state.currentUser = null;
-            state.errorMessage = '';
+            state.isLoading = false
+            state.errorMessage = ''
+            state.currentUser = null
         }
     },
     extraReducers: (builder) => {

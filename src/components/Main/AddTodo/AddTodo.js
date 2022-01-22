@@ -4,12 +4,11 @@ import { FormControl, TextField, Button, Select, MenuItem, InputLabel, Grid } fr
 import SaveIcon from '@mui/icons-material/Save'
 import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
-import { todoSlice } from "../../../redux/slices/todoSlice"
+import { todoSlice, addTodo } from "../../../redux/slices/todoSlice"
 import { accountSelector } from '../../../redux/selectors/selectors'
-import { serverUrl } from '../../../constant/constant'
 
 function AddTodo() {
-    const [todo, setTodo] = useState("")
+    const [todoName, setTodoName] = useState("")
     const [priority, setPriority] = useState("High")
     const addTodoRef = useRef()
 
@@ -22,48 +21,25 @@ function AddTodo() {
     }
 
     const handleInputChange = e => {
-        setTodo(e.target.value)
+        setTodoName(e.target.value)
     }
 
-    const handleSaveTodo = () => {
-        if (!todo)
+    const handleSaveTodo = async () => {
+        if (!todoName)
             return
 
-        const todoObj = {
+        const todo = {
             id: uuidv4(),
             account_id: account.id,
-            name: todo,
+            name: todoName,
             priority: priority,
             completed: false
         }
-        dispatch(todoSlice.actions.addTodo({
-            todoObj
-        }))
 
-        const request = new Request(serverUrl + "/api/todo", {
-            method: "post",
-            credentials: 'include',
-            body: JSON.stringify(todoObj),
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                'Content-Type': 'application/json'
-            }
-        })
+        await dispatch(addTodo(todo))
 
-        fetch(request)
-            .then(res => res.json())
-            .then(result => {
-                console.log(result)
-                // const todoList = result.todoList
-                // dispatch(todoSlice.actions.addTodoList({
-                //     todoList: todoList
-                // }))
-            })
-            .catch(error => console.error(error))
-
-        setTodo("")
+        setTodoName("")
         setPriority("High")
-        // addTodoRef.current.focus()
     }
 
     return (
@@ -84,7 +60,7 @@ function AddTodo() {
                         id="todo-filter"
                         label="Thêm công việc"
                         variant="outlined"
-                        value={todo}
+                        value={todoName}
                         onChange={e => handleInputChange(e)}
                     />
                 </FormControl>

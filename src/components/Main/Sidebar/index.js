@@ -15,7 +15,7 @@ function Sidebar() {
     const dispatch = useDispatch()
 
     const logout = () => {
-        dispatch(accountSlice.actions.logout({}))
+        dispatch(accountSlice.actions.logout())
     }
 
     return (

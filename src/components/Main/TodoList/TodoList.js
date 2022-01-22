@@ -5,8 +5,7 @@ import Todo from './Todo';
 import { useSelector, useDispatch } from 'react-redux'
 import { todoListRemainingSelector } from '../../../redux/selectors/selectors';
 import { accountSelector } from '../../../redux/selectors/selectors'
-import { todoSlice, getTodoList } from "../../../redux/slices/todoSlice"
-import { unwrapResult } from '@reduxjs/toolkit';
+import { getTodoList } from "../../../redux/slices/todoSlice"
 
 function TodoList() {
     const todoList = useSelector(todoListRemainingSelector) || []
@@ -16,9 +15,7 @@ function TodoList() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const actionResult = dispatch(getTodoList(account))
-        const todoListtt = unwrapResult(actionResult)
-        console.log(todoListtt)
+        dispatch(getTodoList(account))
     }, [account, dispatch])
 
     return (

@@ -7,6 +7,12 @@ export const getTodoList = createAsyncThunk('todo/getTodoList', async (account) 
     return res.todoList
 })
 
+export const addTodo = createAsyncThunk('todo/addTodo', async (todo) => {
+    await todoAPI.addTodo(todo)
+
+    return todo
+})
+
 export const todoSlice = createSlice({
     name: "todoList",
     initialState: {
@@ -15,9 +21,6 @@ export const todoSlice = createSlice({
         todoList: [],
     },
     reducers: {
-        addTodo: (state, action) => {
-            state.todoList.push(action.payload)
-        },
         statusTodoChange: (state, action) => {
             const currentTodo = state.todoList.find(todo => todo.id === action.payload)
             if (currentTodo) {
@@ -53,6 +56,20 @@ export const todoSlice = createSlice({
         builder.addCase(getTodoList.rejected, (state, action) => {
             state.isLoading = false;
             state.errorMessage = action.payload.message;
+        })
+
+        // add todo
+        builder.addCase(addTodo.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(addTodo.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.todoList.push(action.payload)
+        })
+
+        builder.addCase(addTodo.rejected, (state, action) => {
+            state.isLoading = false
+            state.errorMessage = action.payload.message
         })
     }
 })
