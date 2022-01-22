@@ -26,6 +26,22 @@ const accountAPI = {
             .then(res => res.json())
             .then(result => result)
             .catch(error => error)
+    },
+    deleteTodo: async (id, accountId) => {
+        const url = `${serverUrl}/api/todo/${id}/${accountId}`
+        console.log(url)
+        const request = new Request(url, {
+            method: "delete",
+            credentials: 'include',
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+            }
+        })
+
+        return await fetch(request)
+            .then(res => res.json())
+            .then(result => result)
+            .catch(error => error)
     }
 }
 

@@ -13,6 +13,12 @@ export const addTodo = createAsyncThunk('todo/addTodo', async (todo) => {
     return todo
 })
 
+export const deleteTodo = createAsyncThunk('todo/deleteTodo', async (ids) => {
+    await todoAPI.deleteTodo(ids.id, ids.accountId)
+
+    return ids.id
+})
+
 export const todoSlice = createSlice({
     name: "todoList",
     initialState: {
@@ -38,10 +44,6 @@ export const todoSlice = createSlice({
             if (currentTodo) {
                 currentTodo.name = todo
             }
-        },
-        deleteTodo: (state, action) => {
-            const id = action.payload
-            state.todoList.map((todo, index) => todo.id === id ? state.todoList.splice(index, 1) : todo)
         }
     },
     extraReducers: (builder) => {
@@ -68,6 +70,22 @@ export const todoSlice = createSlice({
         })
 
         builder.addCase(addTodo.rejected, (state, action) => {
+            state.isLoading = false
+            state.errorMessage = action.payload.message
+        })
+
+        // delete todo
+        builder.addCase(deleteTodo.pending, (state) => {
+            state.isLoading = true
+        })
+
+        builder.addCase(deleteTodo.fulfilled, (state, action) => {
+            state.isLoading = false
+            const id = action.payload
+            state.todoList.map((todo, index) => todo.id === id ? state.todoList.splice(index, 1) : todo)
+        })
+
+        builder.addCase(deleteTodo.rejected, (state, action) => {
             state.isLoading = false
             state.errorMessage = action.payload.message
         })

@@ -1,10 +1,11 @@
 import React from 'react'
 import { FormGroup, FormControlLabel, Checkbox, Grid, Card, IconButton, Typography } from '@mui/material';
 import { useState, useRef, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { todoSlice } from "../../../redux/slices/todoSlice"
+import { useDispatch, useSelector } from 'react-redux'
+import { todoSlice, deleteTodo } from "../../../redux/slices/todoSlice"
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { accountSelector } from '../../../redux/selectors/selectors'
 
 const priorityCheck = {
     High: {
@@ -30,9 +31,11 @@ const priorityCheck = {
 function Todo({ name, priority, completed, id }) {
     const todoRef = useRef()
 
+    const account = useSelector(accountSelector)
+
     const [checked, setChecked] = useState(completed)
     const [editable, setEditable] = useState(false)
-    const [todo, setTodo] = useState(todoRef.current?.innerHTML.toString().trim() || "")
+    const [todoName, setTodoName] = useState(todoRef.current?.innerHTML.toString().trim() || "")
 
     const dispatch = useDispatch()
 
@@ -58,16 +61,17 @@ function Todo({ name, priority, completed, id }) {
         }
 
         if (!editable) {
-            dispatch(todoSlice.actions.todoChange({ id: id, todo: todo }))
+            dispatch(todoSlice.actions.todoChange({ id: id, todo: todoName }))
         }
-    }, [editable, dispatch, id, todo])
+    }, [editable, dispatch, id, todoName])
 
     const handleTodoChange = () => {
-        setTodo(todoRef.current.innerHTML.toString().trim())
+        setTodoName(todoRef.current.innerHTML.toString().trim())
     }
 
     const handleDeleteButtonClick = () => {
-        dispatch(todoSlice.actions.deleteTodo(id))
+        const accountId = account.id
+        dispatch(deleteTodo({ id, accountId }))
     }
 
     return (
@@ -81,7 +85,7 @@ function Todo({ name, priority, completed, id }) {
             xs
             justifyContent="space-between">
             <Grid item xs sm={8}>
-                <FormGroup style={{ marginLeft: 12, display: "flex", flexDirection: "row", alignItems: "center"}}>
+                <FormGroup style={{ marginLeft: 12, display: "flex", flexDirection: "row", alignItems: "center" }}>
                     <FormControlLabel
                         style={{ width: "42px", marginRight: 0 }}
                         control={<Checkbox checked={checked} onChange={handleCheckboxChange} />}

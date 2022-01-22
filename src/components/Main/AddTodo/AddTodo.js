@@ -4,7 +4,7 @@ import { FormControl, TextField, Button, Select, MenuItem, InputLabel, Grid } fr
 import SaveIcon from '@mui/icons-material/Save'
 import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
-import { todoSlice, addTodo } from "../../../redux/slices/todoSlice"
+import { addTodo } from "../../../redux/slices/todoSlice"
 import { accountSelector } from '../../../redux/selectors/selectors'
 
 function AddTodo() {
