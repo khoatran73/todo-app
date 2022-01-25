@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import React from 'react';
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { filterSlice } from "../../../redux/slices/filterSlice"
+import { searchFilterChange, statusFilterChange, priorityFilterChange } from "../../../redux/slices/filterSlice"
 
 function Filter() {
     const [priorityFilter, setPriorityFilter] = useState([]);
@@ -20,7 +20,7 @@ function Filter() {
     }
 
     useEffect(() => {
-        dispatch(filterSlice.actions.searchFilterChange(searchText))
+        dispatch(searchFilterChange(searchText))
     }, [searchText, dispatch])
 
     const handlePriorityFilterChange = e => {
@@ -31,7 +31,7 @@ function Filter() {
     }
 
     useEffect(() => {
-        dispatch(filterSlice.actions.priorityFilterChange(priorityFilter))
+        dispatch(priorityFilterChange(priorityFilter))
     }, [priorityFilter, dispatch])
 
     const handleStatusFilterChange = e => {
@@ -39,7 +39,7 @@ function Filter() {
     }
 
     useEffect(() => {
-        dispatch(filterSlice.actions.statusFilterChange(statusFilter))
+        dispatch(statusFilterChange(statusFilter))
     }, [statusFilter, dispatch])
 
     return (

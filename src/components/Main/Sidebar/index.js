@@ -5,8 +5,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useSelector } from 'react-redux'
 import { accountSelector } from '../../../redux/selectors/selectors'
 import { useDispatch } from 'react-redux'
-import { accountSlice } from '../../../redux/slices/accountSlice'
-import { deepOrange } from '@mui/material/colors';
+import { deepOrange } from '@mui/material/colors'
+import { logout } from '../../../redux/slices/accountSlice'
 
 function Sidebar() {
     const { CLIENT_ID } = process.env
@@ -15,8 +15,8 @@ function Sidebar() {
 
     const dispatch = useDispatch()
 
-    const logout = () => {
-        dispatch(accountSlice.actions.logout())
+    const logoutGoogleAccount = () => {
+        dispatch(logout())
     }
 
     return (
@@ -35,7 +35,7 @@ function Sidebar() {
             <GoogleLogout
                 clientId={CLIENT_ID}
                 buttonText={<LogoutIcon />}
-                onLogoutSuccess={logout}
+                onLogoutSuccess={logoutGoogleAccount}
             >
             </GoogleLogout>
         </Card>

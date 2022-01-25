@@ -27,7 +27,7 @@ export const editTodo = createAsyncThunk('todo/editTodo', async (todo) => {
     return { todo: todo, todoList: res.todoList }
 })
 
-export const todoSlice = createSlice({
+const todoSlice = createSlice({
     name: "todoList",
     initialState: {
         isLoading: false,
@@ -107,3 +107,5 @@ export const todoSlice = createSlice({
         })
     }
 })
+
+export default todoSlice.reducer
