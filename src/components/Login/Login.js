@@ -4,9 +4,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { GoogleLogin } from 'react-google-login';
 import { useDispatch } from 'react-redux'
 import { login } from '../../redux/slices/accountSlice'
-import { clientId } from '../../constant/constant'
 
 function Login() {
+    const { REACT_APP_CLIENT_ID } = process.env
+
     const dispatch = useDispatch()
 
     const responseGoogle = async (res) => {
@@ -38,7 +39,7 @@ function Login() {
                     Đăng nhập
                 </Typography>
                 <GoogleLogin
-                    clientId={clientId}
+                    clientId={REACT_APP_CLIENT_ID}
                     buttonText="Đăng nhập bằng Google"
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}

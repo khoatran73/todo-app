@@ -10,12 +10,14 @@ import { getTodoList } from "../../../redux/slices/todoSlice"
 function TodoList() {
     const todoList = useSelector(todoListRemainingSelector) || []
 
+    // console.log(todoList)
+
     const account = useSelector(accountSelector)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getTodoList(account))
+        dispatch(getTodoList(account.id))
     }, [account, dispatch])
 
     return (
@@ -33,7 +35,7 @@ function TodoList() {
                     id={todo.id}
                     name={todo.name}
                     priority={todo.priority}
-                    completed={todo.completed}
+                    completed={todo.isCompleted}
                 />
             ))}
         </Grid>

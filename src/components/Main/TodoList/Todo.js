@@ -2,7 +2,7 @@ import React from 'react'
 import { FormGroup, FormControlLabel, Checkbox, Grid, Card, IconButton, Typography } from '@mui/material';
 import { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { todoSlice, deleteTodo } from "../../../redux/slices/todoSlice"
+import { deleteTodo, editTodo } from "../../../redux/slices/todoSlice"
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { accountSelector } from '../../../redux/selectors/selectors'
@@ -35,13 +35,12 @@ function Todo({ name, priority, completed, id }) {
 
     const [checked, setChecked] = useState(completed)
     const [editable, setEditable] = useState(false)
-    const [todoName, setTodoName] = useState(todoRef.current?.innerHTML.toString().trim() || "")
+    const [todoName, setTodoName] = useState(todoRef.current?.innerHTML.toString().trim() || name)
 
     const dispatch = useDispatch()
 
     const handleCheckboxChange = () => {
         setChecked(!checked)
-        dispatch(todoSlice.actions.statusTodoChange(id))
     }
 
     const handleEditButtonClick = () => {
@@ -61,9 +60,15 @@ function Todo({ name, priority, completed, id }) {
         }
 
         if (!editable) {
-            dispatch(todoSlice.actions.todoChange({ id: id, todo: todoName }))
+            dispatch(editTodo({
+                id: id,
+                account_id: account.id,
+                name: todoName,
+                priority,
+                isCompleted: checked
+            }))
         }
-    }, [editable, dispatch, id, todoName])
+    }, [editable, dispatch, account, todoName, checked, id, priority])
 
     const handleTodoChange = () => {
         setTodoName(todoRef.current.innerHTML.toString().trim())

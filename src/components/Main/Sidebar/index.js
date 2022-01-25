@@ -7,9 +7,10 @@ import { accountSelector } from '../../../redux/selectors/selectors'
 import { useDispatch } from 'react-redux'
 import { accountSlice } from '../../../redux/slices/accountSlice'
 import { deepOrange } from '@mui/material/colors';
-import { clientId } from '../../../constant/constant'
 
 function Sidebar() {
+    const { CLIENT_ID } = process.env
+
     const account = useSelector(accountSelector)
 
     const dispatch = useDispatch()
@@ -32,7 +33,7 @@ function Sidebar() {
                 </Typography>
             </div>
             <GoogleLogout
-                clientId={clientId}
+                clientId={CLIENT_ID}
                 buttonText={<LogoutIcon />}
                 onLogoutSuccess={logout}
             >

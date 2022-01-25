@@ -33,7 +33,7 @@ function AddTodo() {
             account_id: account.id,
             name: todoName,
             priority: priority,
-            completed: false
+            completed: false,
         }
 
         await dispatch(addTodo(todo))
