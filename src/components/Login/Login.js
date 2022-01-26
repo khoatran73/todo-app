@@ -12,7 +12,7 @@ function Login() {
 
     const responseGoogle = async (res) => {
         const account = {
-            id: res.profileObj?.googleId,
+            accountId: res.profileObj?.googleId,
             email: res.profileObj?.email,
             name: res.profileObj?.name,
             url: res.profileObj?.imageUrl

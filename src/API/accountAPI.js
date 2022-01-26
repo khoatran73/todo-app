@@ -1,8 +1,8 @@
-const { REACT_APP_CLIENT_ID } = process.env
+const { REACT_APP_SERVER_URL } = process.env
 
 const accountAPI = {
     postAccount: async (account) => {
-        const request = new Request(REACT_APP_CLIENT_ID + "/api/account", {
+        const request = new Request(REACT_APP_SERVER_URL + "/api/account", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

@@ -27,8 +27,8 @@ const accountAPI = {
             .then(result => result)
             .catch(error => error)
     },
-    deleteTodo: async (id, accountId) => {
-        const url = `${REACT_APP_SERVER_URL}/api/todo/${id}/${accountId}`
+    deleteTodo: async (id) => {
+        const url = `${REACT_APP_SERVER_URL}/api/todo/${id}`
         console.log(url)
         const request = new Request(url, {
             method: "delete",
@@ -44,7 +44,7 @@ const accountAPI = {
             .catch(error => error)
     },
     editTodo: async (todo) => {
-        const url = `${REACT_APP_SERVER_URL}/api/todo/${todo.id}`
+        const url = `${REACT_APP_SERVER_URL}/api/todo/${todo.todoId}`
         const request = new Request(url, {
             method: "put",
             credentials: 'include',

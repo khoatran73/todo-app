@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import todoAPI from '../../API/todoAPI'
 
-export const getTodoList = createAsyncThunk('todo/getTodoList', async (id) => {
-    const res = await todoAPI.getTodoList(id)
+export const getTodoList = createAsyncThunk('todo/getTodoList', async (accountId) => {
+    const res = await todoAPI.getTodoList(accountId)
 
-    return res.todoList
+    return res
 })
 
 export const addTodo = createAsyncThunk('todo/addTodo', async (todo) => {
@@ -13,18 +13,18 @@ export const addTodo = createAsyncThunk('todo/addTodo', async (todo) => {
     return todo
 })
 
-export const deleteTodo = createAsyncThunk('todo/deleteTodo', async (ids) => {
-    await todoAPI.deleteTodo(ids.id, ids.accountId)
+export const deleteTodo = createAsyncThunk('todo/deleteTodo', async (todoId) => {
+    await todoAPI.deleteTodo(todoId)
 
-    return ids.id
+    return todoId
 })
 
 export const editTodo = createAsyncThunk('todo/editTodo', async (todo) => {
     await todoAPI.editTodo(todo)
 
-    const res = await todoAPI.getTodoList(todo.account_id)
+    const res = await todoAPI.getTodoList(todo.accountId)
 
-    return { todo: todo, todoList: res.todoList }
+    return { todo: todo, todoList: res }
 })
 
 const todoSlice = createSlice({
@@ -70,8 +70,8 @@ const todoSlice = createSlice({
 
         builder.addCase(deleteTodo.fulfilled, (state, action) => {
             state.isLoading = false
-            const id = action.payload
-            state.todoList.map((todo, index) => todo.id === id ? state.todoList.splice(index, 1) : todo)
+            const todoId = action.payload
+            state.todoList.map((todo, index) => todo.todoId === todoId ? state.todoList.splice(index, 1) : todo)
         })
 
         builder.addCase(deleteTodo.rejected, (state, action) => {

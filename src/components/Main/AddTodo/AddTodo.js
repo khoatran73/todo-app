@@ -29,11 +29,11 @@ function AddTodo() {
             return
 
         const todo = {
-            id: uuidv4(),
-            account_id: account.id,
+            todoId: uuidv4(),
+            accountId: account.accountId,
             name: todoName,
             priority: priority,
-            completed: false,
+            isCompleted: false,
         }
 
         await dispatch(addTodo(todo))

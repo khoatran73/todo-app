@@ -28,7 +28,7 @@ const priorityCheck = {
     }
 }
 
-function Todo({ name, priority, completed, id }) {
+function Todo({ name, priority, completed, todoId }) {
     const todoRef = useRef()
 
     const account = useSelector(accountSelector)
@@ -61,22 +61,21 @@ function Todo({ name, priority, completed, id }) {
 
         if (!editable) {
             dispatch(editTodo({
-                id: id,
-                account_id: account.id,
+                todoId: todoId,
+                accountId: account.accountId,
                 name: todoName,
                 priority,
                 isCompleted: checked
             }))
         }
-    }, [editable, dispatch, account, todoName, checked, id, priority])
+    }, [editable, dispatch, account, todoName, checked, todoId, priority])
 
     const handleTodoChange = () => {
         setTodoName(todoRef.current.innerHTML.toString().trim())
     }
 
     const handleDeleteButtonClick = () => {
-        const accountId = account.id
-        dispatch(deleteTodo({ id, accountId }))
+        dispatch(deleteTodo(todoId))
     }
 
     return (

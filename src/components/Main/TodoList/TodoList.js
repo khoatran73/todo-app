@@ -10,14 +10,12 @@ import { getTodoList } from "../../../redux/slices/todoSlice"
 function TodoList() {
     const todoList = useSelector(todoListRemainingSelector) || []
 
-    // console.log(todoList)
-
     const account = useSelector(accountSelector)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getTodoList(account.id))
+        dispatch(getTodoList(account.accountId))
     }, [account, dispatch])
 
     return (
@@ -31,8 +29,8 @@ function TodoList() {
         >
             {todoList.map(todo => (
                 <Todo
-                    key={todo.id}
-                    id={todo.id}
+                    key={todo.todoId}
+                    todoId={todo.todoId}
                     name={todo.name}
                     priority={todo.priority}
                     completed={todo.isCompleted}
